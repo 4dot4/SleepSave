@@ -12,7 +12,6 @@ import (
 func main() {
 	rl.InitWindow(800, 800, "SleepSave")
 	var timer time.Duration
-	fmt.Println(timer)
 	for !rl.WindowShouldClose() {
 		var clock = time.Now()
 		var endtime = clock.Add(timer)
@@ -38,4 +37,5 @@ func main() {
 		rl.DrawText(format, 300, 500, 60, rl.Green)
 		rl.EndDrawing()
 	}
+	rl.CloseWindow()
 }
