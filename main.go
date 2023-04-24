@@ -43,7 +43,6 @@ func main() {
 		if setTimer {
 			if gui.Button(rl.Rectangle{350, 580, 100, 50}, "set timer") {
 				setTimer = false
-				fmt.Println(setTimer, "dentro do butao")
 				go func(duration *time.Duration) {
 					for *duration != 0 {
 						time.Sleep(time.Second)
