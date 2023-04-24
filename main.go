@@ -13,20 +13,35 @@ import (
 func main() {
 	rl.InitWindow(800, 800, "SleepSave")
 	var timer time.Duration
-	timer += 10 * time.Second
 	var setTimer = true
 	var endtime time.Time
+	var x, y int32 = 0, 0
 
 	// var FrameCounter uint
 	rl.SetTargetFPS(60)
 	for !rl.WindowShouldClose() {
-
+		if rl.IsKeyDown(rl.KeyA) {
+			x -= 5
+			fmt.Println("x: ", x)
+		}
+		if rl.IsKeyDown(rl.KeyD) {
+			x += 5
+			fmt.Println("x: ", x)
+		}
+		if rl.IsKeyDown(rl.KeyW) {
+			y -= 5
+			fmt.Println("y: ", y)
+		}
+		if rl.IsKeyDown(rl.KeyS) {
+			y += 5
+			fmt.Println("y: ", y)
+		}
 		var clock = time.Now()
 		endtime = clock.Add(timer)
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.Black)
 		if setTimer {
-			if gui.Button(rl.Rectangle{500, 500, 300, 100}, "set timer") {
+			if gui.Button(rl.Rectangle{350, 580, 100, 50}, "set timer") {
 				setTimer = false
 				fmt.Println(setTimer, "dentro do butao")
 				go func(duration *time.Duration) {
@@ -41,30 +56,30 @@ func main() {
 				}(&timer)
 			}
 		}
-		if gui.LabelButton(rl.Rectangle{300, 400, 20, 20}, "+ 1 hour") {
+		if gui.LabelButton(rl.Rectangle{200, 320, 20, 20}, "+ 1 hour") {
 			timer += time.Hour
 		}
-		if gui.LabelButton(rl.Rectangle{400, 400, 20, 20}, "+ 30 minutes") {
+		if gui.LabelButton(rl.Rectangle{510, 320, 20, 20}, "+ 30 minutes") {
 			timer += 30 * time.Minute
 		}
 
-		if gui.LabelButton(rl.Rectangle{300, 600, 20, 20}, "- 1 hour") {
-			if timer-time.Hour > 0 {
+		if gui.LabelButton(rl.Rectangle{200, 520, 20, 20}, "- 1 hour") {
+			if timer-time.Hour >= 0 {
 
 				timer -= time.Hour
 			}
 		}
-		if gui.LabelButton(rl.Rectangle{400, 600, 20, 20}, "- 30 minutes") {
-			if timer-30*time.Minute > 0 {
+		if gui.LabelButton(rl.Rectangle{510, 520, 20, 20}, "- 30 minutes") {
+			if timer-30*time.Minute >= 0 {
 
 				timer -= 30 * time.Minute
 			}
 		}
 		rl.DrawText("it's "+clock.Format(time.Kitchen), 250, 100, 60, rl.Blue)
-		rl.DrawText("End Time "+endtime.Format(time.Kitchen), 100, 700, 60, rl.Red)
+		rl.DrawText("End Time "+endtime.Format(time.Kitchen), 165, 710, 60, rl.Red)
 
 		format := fmt.Sprintf("%v", timer)
-		rl.DrawText(format, 300, 500, 60, rl.Green)
+		rl.DrawText(format, 300, 400, 60, rl.Green)
 		rl.EndDrawing()
 	}
 	rl.CloseWindow()
